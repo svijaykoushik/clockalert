@@ -1,0 +1,13 @@
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\bin\Debug\Clock Alert.exe
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\bin\Debug\Clock Alert.pdb
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\obj\Debug\ResolveAssemblyReference.cache
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\obj\Debug\Clock_Alert.Properties.Resources.resources
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\obj\Debug\Clock_Alert.Form1.resources
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\obj\Debug\Clock Alert.csproj.GenerateResource.Cache
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\obj\Debug\Clock Alert.exe
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\obj\Debug\Clock Alert.pdb
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\bin\Debug\Clock Alert.exe.manifest
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\bin\Debug\Clock Alert.application
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\obj\Debug\Clock Alert.TrustInfo.xml
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\obj\Debug\Clock Alert.exe.manifest
+E:\My Documents\Visual Studio 2008\Projects\Clock Alert\Clock Alert\obj\Debug\Clock Alert.application
