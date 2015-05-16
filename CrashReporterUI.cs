@@ -28,12 +28,15 @@ namespace Clock_Alert
         private Exception exception;
         private CrashReporter reporter;
         private string message;
+        private readonly ComponentResourceManager _resource;
 
         public CrashReporterUI(Exception exceptionObject)
         {
             InitializeComponent();
             exception = exceptionObject;
-            reporter = new CrashReporter();            
+            reporter = new CrashReporter();
+            _resource= new ComponentResourceManager(typeof(CrashReporterUI));
+            this.Text = _resource.GetString("TitleText");
         }
 
         private void sendButton_Click(object sender, EventArgs e)
@@ -41,9 +44,32 @@ namespace Clock_Alert
             Hide();
             reporter.getException(exception);
             reporter.createReport();
-            reporter.sendReport();
+            sendReport();
             Close();
             Application.Exit();
+        }
+
+        private void sendReport()
+        {
+            if (InternetConnection.checkConntection())
+            { reporter.sendReport(); }
+            else
+            {
+                if (System.Windows.Forms.DialogResult.Retry == System.Windows.Forms.MessageBox.Show(Contents.noInternetMessage, Contents.noInternetTitle, System.Windows.Forms.MessageBoxButtons.RetryCancel, System.Windows.Forms.MessageBoxIcon.Exclamation))
+                {
+                    sendReport(); ;
+                }
+                else
+                {
+                    InternetConnection.InternettConnectionStateCanged += InternetConnection_InternettConnectionStateCanged;
+                }
+            }
+        }
+
+        void InternetConnection_InternettConnectionStateCanged(object sender, InternetConnectionStateChangedEventArgs e)
+        {
+            sendReport();
+            InternetConnection.InternettConnectionStateCanged -= InternetConnection_InternettConnectionStateCanged;
         }
 
         private void dontSendButton_Click(object sender, EventArgs e)

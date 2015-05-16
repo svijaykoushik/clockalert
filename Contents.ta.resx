@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="aboutText" xml:space="preserve">
+    <value>Clock Alert ஐ பற்றி</value>
+  </data>
+  <data name="chkUpdateText" xml:space="preserve">
+    <value>Clock Alert ஐ மேம்படுத்து</value>
+  </data>
+  <data name="clockOff" xml:space="preserve">
+    <value>அணைக்க</value>
+  </data>
+  <data name="clockOn" xml:space="preserve">
+    <value>இயக்கு</value>
+  </data>
+  <data name="closeText" xml:space="preserve">
+    <value>வெளியேரு</value>
+  </data>
+  <data name="crashReportErrMsgP1" xml:space="preserve">
+    <value>ஐயோ! அறிக்கையை அனுப்பும் பொழுது ஏதோ தவறாகிவிட்டது. Clock Alert ஐ மறுதொடக்கம் செய்யவும். அது சரி வரவில்லையானால் கீழ் காணும் அறிவுறுத்தல்களை படிப்படியாக முயற்சிக்கவும்
+1. இந்த பாதையில் உள்ள இடத்திற்கு செல்லவும்.
+</value>
+  </data>
+  <data name="crashReportErrMsgP2" xml:space="preserve">
+    <value>
+2. குறிப்பு கோப்பை கண்டுகொள்ளவும்.(எ.கா. ClockAlert&lt;தேதி&gt;.txt)
+3. அந்த கோப்பை moon01man@gmail.com என்ற மினஞ்சல் முகவரிக்கு அனுப்பவும், அல்லது எங்கள் முகபுத்தாக பக்கத்தில் பதிவு செய்யவும்.</value>
+  </data>
+  <data name="crashReportErrorTitle" xml:space="preserve">
+    <value>அனுப்பதல் தோல்வி!</value>
+  </data>
+  <data name="crashReportSentMessage" xml:space="preserve">
+    <value>செயலிழப்பு அறிக்கை தயரிப்பாளரரகளிடம் அனுப்பப்பட்டுவிட்டது.
+சிரமத்திற்கு மன்னிக்கவும்.</value>
+  </data>
+  <data name="crashReportSentTitle" xml:space="preserve">
+    <value>அறிக்கை அனுப்பப்பட்டது</value>
+  </data>
+  <data name="icoText" xml:space="preserve">
+    <value>ஒவ்வொரு மணிநேரமும் ஒலிக்கும் ஒரு கடிகாரம்.</value>
+  </data>
+  <data name="invalidTimeIntervalMsg" xml:space="preserve">
+    <value>ஆரம்ப நேரமும் முடிவு நேரமும் ஒன்றாக இருக்க இயலாது.
+இவ்விரண்டிற்கும் இடையே எந்த கால இடைவெளியும் இல்லை.</value>
+  </data>
+  <data name="invalidTimeIntervalTitle" xml:space="preserve">
+    <value>எச்சரிக்கை: தவராண கால இடைவெளி</value>
+  </data>
+  <data name="noInternetMessage" xml:space="preserve">
+    <value>இங்கு இணைய இணைப்பு உள்ளதாக தோன்றவில்லை. தயவு செய்து இணையத்துடன் இணைத்துக்கொள்ளவும்.</value>
+  </data>
+  <data name="noInternetTitle" xml:space="preserve">
+    <value>இணைய இணைப்பு இல்லை</value>
+  </data>
+  <data name="settingsText" xml:space="preserve">
+    <value>அமைப்புகள்</value>
+  </data>
+  <data name="turnoffText" xml:space="preserve">
+    <value>அணைக்க</value>
+  </data>
+  <data name="updateAvailable" xml:space="preserve">
+    <value>Clock Alert இன் புதிய பதிப்பு உள்ளது, அதை பதிவிரக்கம் செய்யவா?</value>
+  </data>
+  <data name="updateAvailableTitle" xml:space="preserve">
+    <value>புதிய பதிப்பு உள்ளது</value>
+  </data>
+  <data name="updateNotAvailable" xml:space="preserve">
+    <value>இதுவே சமிபத்ய பதிப்பு, புதிய பதிப்பு எதுவும் இல்லை.</value>
+  </data>
+  <data name="updateNotAvailableTitle" xml:space="preserve">
+    <value>புதிய பதிப்பு இல்லை</value>
+  </data>
+</root>

@@ -236,11 +236,14 @@ namespace Clock_Alert
                 mail.setFields("crashreporterforclockalert@gmail.com", "moon01man@gmail.com", "Crash report " + applicationName + " " + applicationVersion, exceptionReport);
                 try
                 {
+                    //throw new Exception("Error Test");
                     mail.sendMail();
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.Forms.MessageBox.Show("Can't send e-mail report right now because, " + ex.Message + " has occured.");
+                    //System.Windows.Forms.MessageBox.Show(ex.ToString());
+                    System.Windows.Forms.MessageBox.Show(Contents.crashReportErrMsgP1 + '\"' + Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + System.IO.Path.DirectorySeparatorChar + "Moon01Man" + System.IO.Path.DirectorySeparatorChar + "Clock Alert" + System.IO.Path.DirectorySeparatorChar + '\"' + Contents.crashReportErrMsgP2);
+                    ErrorLog.logError(ex);
                 }
             }
             else

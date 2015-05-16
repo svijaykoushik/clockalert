@@ -16,6 +16,7 @@ This file is part of Clock Alert.
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace Clock_Alert
 {
@@ -34,6 +35,23 @@ namespace Clock_Alert
                 return true;
             else 
                 return false;
+            /*For Testing purpose
+             * if (DateTime.Now.Second == 0)
+                return true;
+            else
+                return false;*/
+        }
+
+        public bool isBetween(DateTime now, DateTime start, DateTime end)
+        {
+            if (now.TimeOfDay == start.TimeOfDay)
+                return true;
+            if (now.TimeOfDay == end.TimeOfDay)
+                return true;
+            if (start.TimeOfDay <= end.TimeOfDay)
+                return (now.TimeOfDay >= start.TimeOfDay && now.TimeOfDay <= end.TimeOfDay);
+            else
+                return !(now.TimeOfDay >= start.TimeOfDay && now.TimeOfDay <= end.TimeOfDay);
         }
     }
 }
