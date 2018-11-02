@@ -57,13 +57,5 @@ namespace Clock_Alert
         {
             audioPlayer.Play();
         }
-
-        /// <summary>
-        /// Stops the current playing music
-        /// </summary>
-        public void stop()
-        {
-            audioPlayer.Stop();
-        }
     }
 }

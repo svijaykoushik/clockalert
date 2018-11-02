@@ -33,15 +33,11 @@ namespace Clock_Alert
         /// <returns></returns>
         public static string logError(Exception ex)
         {
-            header = DateTime.Now.ToString() + "\r\n";
-            message = "Source:\r\n\n" + ex.Source + "\r\n\nMessage:\r\n\n" + ex.Message + "\r\n\nStack Trace:\r\n\n" + ex.StackTrace;
+            header = DateTime.Now.ToString() + "\n\n";
+            message = ex.Message;
             footer = "\n\n\n";
-            folderpath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + System.IO.Path.DirectorySeparatorChar + "Moon01Man" + System.IO.Path.DirectorySeparatorChar + "Clock Alert" + System.IO.Path.DirectorySeparatorChar;
-            if (!System.IO.Directory.Exists(folderpath))
-            {
-                System.IO.Directory.CreateDirectory(folderpath);
-            }
-            path=folderpath+ "ClockALert Log" + DateTime.Now.ToShortDateString()+".txt";
+            folderpath =Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            path=folderpath+ @"\ClockALert Log" + DateTime.Now.ToShortDateString()+".txt";
             System.IO.StreamWriter sw = new System.IO.StreamWriter(path, true);
             try
             {

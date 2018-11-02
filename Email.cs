@@ -61,8 +61,6 @@ namespace Clock_Alert
 
         private SmtpClient mailClient;
 
-        private Progress _progress;
-
         /// <summary>
         /// Initializes the Email class instance
         /// </summary>
@@ -130,30 +128,11 @@ namespace Clock_Alert
                 mail.IsBodyHtml = true;
                 mail.Subject = subject;
                 mail.Body = body;
-                //mailClient.Send(mail);
-                mailClient.SendCompleted += new SendCompletedEventHandler(mailClient_SendCompleted);
-                mailClient.SendAsync(mail, "Crash Report");
-                _progress = new Progress();
-                _progress.ShowDialog();
+                mailClient.Send(mail);
             }
             else
             {
                 throw new Exception("Email server has not been configured. please call configure method first");
-            }
-        }
-
-        void mailClient_SendCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-            _progress.Close();
-            if (e.Error != null)
-            {
-                ErrorLog.logError(e.Error);
-                System.Windows.Forms.MessageBox.Show(Contents.crashReportErrorTitle, Contents.crashReportErrMsgP1 + '\"' + Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + System.IO.Path.DirectorySeparatorChar + "Moon01Man" + System.IO.Path.DirectorySeparatorChar + "Clock Alert" + System.IO.Path.DirectorySeparatorChar + '\"' + Contents.crashReportErrMsgP2, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-            }
-            else
-            {
-                _progress.Close();
-                System.Windows.Forms.MessageBox.Show(Contents.crashReportSentMessage, Contents.crashReportSentTitle, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
             }
         }
     }
