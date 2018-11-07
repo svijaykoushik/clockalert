@@ -1,5 +1,10 @@
 # Visual Studio Files
-.sln
+*.sln
+*.user
+*.suo
+Clock Alert.csproj
 
 # Project directories
 upload/*
+bin/*
+obj/*
