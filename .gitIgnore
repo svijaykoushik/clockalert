@@ -8,3 +8,6 @@ Clock Alert.csproj
 upload/*
 bin/*
 obj/*
+
+#VS code files
+.vscode/*
