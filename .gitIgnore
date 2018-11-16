@@ -2,7 +2,8 @@
 *.sln
 *.user
 *.suo
-Clock Alert.csproj
+*.csproj
+*.pfx
 
 # Project directories
 upload/*

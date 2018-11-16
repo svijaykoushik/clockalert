@@ -2,13 +2,17 @@
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using System.Net.NetworkInformation;
+using System.Net;
+using System.IO;
+using System.Windows.Forms;
+using System.Text;
 
 namespace Clock_Alert
 {
     /// <summary>
     /// Reperesents the methods for connecting to the internet
     /// </summary>
-    static class InternetConnection
+    public static class InternetConnection
     {
         private static bool isConnected;
 
@@ -67,13 +71,32 @@ namespace Clock_Alert
         /// <returns></returns>
         public static bool doPing(string hostName)
         {
+            if (hostName == null)
+            {
+                throw new ArgumentNullException("hostName", "The method doPing received null expected string");
+            }
+            else if (hostName == "")
+            {
+                throw new ArgumentOutOfRangeException("hostName", "The method doPing received null expected string");
+            }
+            Uri url;
             Ping pingObj = new Ping();
             byte[] buffer = new byte[32];
             int timeOut = 1000;
+            try
+            {
+                url = new Uri(hostName);
+            }
+            catch (UriFormatException ex)
+            {
+                throw new ArgumentException("The method doPing received an invalid argument", "hostName", ex);
+            }
+            string hostUrl = string.Format("{0}", url.Host);
             PingOptions pingOptionsObject = new PingOptions(45, false);
             try
             {
-                PingReply pingReplyObj = pingObj.Send(hostName, timeOut, buffer, pingOptionsObject);
+                PingReply pingReplyObj = pingObj.Send(hostUrl, timeOut, buffer, pingOptionsObject);
+                //System.Diagnostics.Debug.WriteLine("Ping status for " + hostUrl + "is " + pingReplyObj.Status.ToString());
                 if (pingReplyObj.Status == IPStatus.Success)
                     return true;
             }
@@ -157,12 +180,84 @@ namespace Clock_Alert
                     handler(sender, new InternetConnectionStateChangedEventArgs(isConnected));
             }
         }
+
+        /// <summary>
+        ///  Sends a HTTP POST request to the host provided.
+        /// </summary>
+        /// <param name="request">The request to be sent</param>
+        /// <param name="requestContent">The content of the request</param>
+        /// <returns>Response to the request sent</returns>
+        public static WebResponse postRequest(WebRequest request, byte[] requestContent)
+        {
+            WebResponse response = null;
+            if (request == null)
+            {
+                throw new ArgumentNullException("request", "The method postRequest received null as argument");
+            }
+            else if (requestContent == null)
+            {
+                throw new ArgumentNullException("requestContent", "The method postRequest received null as argument");
+            }
+            try
+            {
+                Stream dataStream = request.GetRequestStream();
+                dataStream.Write(requestContent, 0, requestContent.Length);
+                dataStream.Close();
+                response = request.GetResponse();
+            }
+            catch (WebException ex)
+            {
+                response = null;
+                ErrorLog.logError(ex);
+                MessageBox.Show("Unable to send data to the server", "Error: At posting Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (IOException ex)
+            {
+                response = null;
+                ErrorLog.logError(ex);
+                MessageBox.Show("Unable to open stream to send data", "Error: At posting Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                response = null;
+                ErrorLog.logError(ex);
+                MessageBox.Show("Unknown error occured", "Error: At posting Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of System.Net.WebRequest with the specified arguments.
+        /// </summary>
+        /// <param name="hostUrl">URL to the host</param>
+        /// <param name="requestMethod">The method in which request is to be sent</param>
+        /// <param name="requsetContentType">The content type of the request</param>
+        /// <param name="requestBody">The body of the request</param>
+        /// <returns></returns>
+        public static WebRequest formWebRequest(string hostUrl, string requestMethod, string requsetContentType, string requestBody)
+        {
+            if((hostUrl != null && hostUrl !="")  && (requestMethod != null && requestMethod != "") && (requsetContentType != null && requsetContentType != "") && (requestBody !="" && requestBody != null))
+            {
+                WebRequest request = WebRequest.Create(hostUrl);
+                request.Method = requestMethod;
+                request.ContentType = requsetContentType;
+                byte[] reqBody = Encoding.UTF8.GetBytes(requestBody);
+                request.ContentLength = reqBody.Length;
+                return request;
+            }
+            else
+            {
+                throw new ArgumentException("The method formWebRequest received invalid arguments");
+            }
+        }
+
+                
     }
 
     /// <summary>
     /// Describes all information about the change in internet connection state
     /// </summary>
-    class InternetConnectionStateChangedEventArgs : EventArgs
+    public class InternetConnectionStateChangedEventArgs : EventArgs
     {
         private bool isConnected;
 

@@ -16,6 +16,9 @@ This file is part of Clock Alert.
 using System;
 using System.Web;
 using System.Reflection;
+using System.Net;
+using System.Text;
+using System.IO;
 
 namespace Clock_Alert
 {
@@ -236,15 +239,45 @@ namespace Clock_Alert
                 mail.setFields("crashreporterforclockalert@gmail.com", "moon01man@gmail.com", "Crash report " + applicationName + " " + applicationVersion, exceptionReport);
                 try
                 {
+                    //throw new Exception("Error Test");
                     mail.sendMail();
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.Forms.MessageBox.Show("Can't send e-mail report right now because, " + ex.Message + " has occured.");
+                    //System.Windows.Forms.MessageBox.Show(ex.ToString());
+                    System.Windows.Forms.MessageBox.Show(Contents.crashReportErrMsgP1 + '\"' + Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + System.IO.Path.DirectorySeparatorChar + "Moon01Man" + System.IO.Path.DirectorySeparatorChar + "Clock Alert" + System.IO.Path.DirectorySeparatorChar + '\"' + Contents.crashReportErrMsgP2);
+                    ErrorLog.logError(ex);
                 }
             }
             else
                 throw new Exception("Crash report cannot be empty. please create a report using the createReport method.");
+        }
+
+        /// <summary>
+        /// Sends the crashreport to developers through a web request
+        /// </summary>
+        public void sendWebReport()
+        {
+            string postData = "module=report&appName=" + Assembly.GetExecutingAssembly().GetName().FullName
+                    + "&appVersion=" + Assembly.GetExecutingAssembly().GetName().Version.ToString()
+                    + "&osVersion=" + Environment.OSVersion.VersionString
+                    + "&exceptionType=" + exceptionType
+                    + "&exceptionMessage=" + exceptionMessage + "&innerException="
+                    + innerException
+                    + "&stackTrace=" + exceptionStackTrace;
+            byte[] requestBody = Encoding.UTF8.GetBytes(postData);
+            WebRequest request = InternetConnection.formWebRequest("http://localhost/angular/practice/crashReport.php", "POST", "application/x-www-form-urlencoded", postData);
+            if (InternetConnection.checkConntection())
+            {
+                WebResponse response = InternetConnection.postRequest(request, requestBody);
+                Stream responseStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(responseStream);
+                System.Diagnostics.Debug.WriteLine(reader.ReadToEnd());
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Unable to Connect to Internet", "No internet connection", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation);
+            }
         }
     }
 }

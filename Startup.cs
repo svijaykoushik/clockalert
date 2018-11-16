@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace Clock_Alert
 {
@@ -31,20 +33,28 @@ namespace Clock_Alert
         ContextMenuStrip menu;
         ToolStripMenuItem settings,turnoff,close,chkUpdate,about;
         Timer clock;
+        //private readonly ComponentResourceManager _resource;
+        public CultureInfo currentCulture;
         //Modules
         AudioPlayer player;
         TimeKeeper keeper;
         TimeTeller teller;
         FileHandler handle;
+        //Localization localization;
         //Local class variables
-        bool state;
+        bool state, clickToTalk, alertIntrvl, tellTime;
         int selectedSound;
+        string start, end;
         public Startup()
         {            
             player = new AudioPlayer();
             keeper = new TimeKeeper();
             teller = new TimeTeller();
             handle = new FileHandler();
+            //localization = new Localization();
+            //_resource = new ComponentResourceManager(typeof(Startup));
+            //System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("ta");
+            //currentCulture = CultureInfo.CreateSpecificCulture("en");
         }
         /// <summary>
         /// Initializes the components for the application
@@ -59,30 +69,39 @@ namespace Clock_Alert
             chkUpdate = new ToolStripMenuItem();
             about = new ToolStripMenuItem();
             clock = new Timer();
+            
             //Tray icon properties
-            ico.Icon=Properties.Resources.trayIcon;
-            ico.Text="A clock that rings every hour";
-            ico.Visible=true;
-            ico.ContextMenuStrip = menu;
-            ico.MouseClick += new MouseEventHandler(ico_MouseClick);
+            //_resource.ApplyResources(this.ico, "ico");
+            this.ico.Icon=Properties.Resources.trayIcon;
+            ico.Text = Contents.icoText;//"A clock that rings every hour";
+            this.ico.Visible=true;
+            this.ico.ContextMenuStrip = menu;
+            this.ico.MouseClick += new MouseEventHandler(ico_MouseClick);
 
             //about properties.
-            about.Text = "About Clock alert";
+            //_resource.ApplyResources(this.about, "about");
+            about.Text = Contents.aboutText;//"About Clock alert";
+            about.Name = "about";
             about.Click += new EventHandler(about_Click);
             menu.Items.Add(about);
 
             //chkUpdate property
-            chkUpdate.Text = "Check for updates";
+            //_resource.ApplyResources(this.chkUpdate, "chkUpdate");
+            chkUpdate.Text = Contents.chkUpdateText;//"Check for updates";
             chkUpdate.Click += new EventHandler(chkUpdate_Click);
             menu.Items.Add(chkUpdate);
 
             // settings properties
-            settings.Text="Settings";
+            //_resource.ApplyResources(this.settings, "settings");
+            settings.Text = Contents.settingsText;//"Settings";
+            settings.AutoSize = true;
             settings.Click += new EventHandler(settings_Click);
             menu.Items.Add(settings);
 
             //turnoff properties
-            turnoff.Text = "Turn off";
+            //_resource.ApplyResources(this.turnoff, "turnoff");
+            turnoff.Text = Contents.turnoffText;//"Turn off";
+            turnoff.AutoSize = true;
             turnoff.Click += new EventHandler(turnoff_Click);
             menu.Items.Add(turnoff);
 
@@ -91,7 +110,9 @@ namespace Clock_Alert
             clock.Tick += new EventHandler(clock_Tick);
 
             //close properties
-            close.Text = "Close";
+            //_resource.ApplyResources(this.close, "close");
+            close.Text = Contents.closeText;//"Close";
+            close.AutoSize = true;
             close.Click += new EventHandler(close_Click);
                 menu.Items.Add(close);
 
@@ -114,7 +135,10 @@ namespace Clock_Alert
         {
             if (e.Button == MouseButtons.Left)
             {
-                teller.talk("It's " + DateTime.Now.ToString("hh:mm tt"));
+                if (clickToTalk)
+                {
+                    teller.talk(Contents.speakText + DateTime.Now.ToString("hh:mm tt"));
+                }
             }
         }
 
@@ -129,8 +153,12 @@ namespace Clock_Alert
         /// </summary>
         public void startApp()
         {
+            //localization.configure();
             loadSettings();
-            loadSound();
+            if (tellTime == false)
+            {
+                loadSound();
+            }
             initializeComponents();
             clock.Start();
             state = true;
@@ -138,20 +166,51 @@ namespace Clock_Alert
 
         void clock_Tick(object sender, EventArgs e)
         {
-            if (keeper.isItTime())
+            if (alertIntrvl)
             {
-                try
+                if (keeper.isBetween(DateTime.Now, Convert.ToDateTime(start), Convert.ToDateTime(end)))
                 {
-                    clock.Stop();
-                    player.play();
-                    clock.Start();
+                    if (keeper.isItTime())
+                    {
+                        try
+                        {
+                            clock.Stop();
+                            if (tellTime == false)
+                                player.playAsynch();
+                            else
+                                teller.talk("The time is " + DateTime.Now.ToString("hh:mm tt"));
+                            clock.Start();
+                        }
+                        catch (Exception ex)
+                        {
+                            clock.Stop();
+                            //MessageBox.Show(ErrorLog.logError(ex), "Error - Clock Alert", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                            CrashReporterUI reportWindow = new CrashReporterUI(ex);
+                            reportWindow.ShowDialog();
+                        }
+                    }
                 }
-                catch (Exception ex)
+            }
+            else
+            {
+                if (keeper.isItTime())
                 {
-                    clock.Stop();
-                    //MessageBox.Show(ErrorLog.logError(ex), "Error - Clock Alert", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
-                    CrashReporterUI reportWindow= new CrashReporterUI(ex);
-                    reportWindow.ShowDialog();
+                    try
+                    {
+                        clock.Stop();
+                        if (tellTime == false)
+                            player.playAsynch();
+                        else
+                            teller.talk("The time is " + DateTime.Now.ToString("hh:mm tt"));
+                        clock.Start();
+                    }
+                    catch (Exception ex)
+                    {
+                        clock.Stop();
+                        //MessageBox.Show(ErrorLog.logError(ex), "Error - Clock Alert", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                        CrashReporterUI reportWindow = new CrashReporterUI(ex);
+                        reportWindow.ShowDialog();
+                    }
                 }
             }
         }
@@ -161,20 +220,22 @@ namespace Clock_Alert
             if (state == true)
             {
                 clock.Stop();
-                turnoff.Text = "Turn On";
+                turnoff.Text = Contents.clockOn;//_resource.GetString("clock on");
+                state = false;
             }
             else
             {
                 clock.Start();
-                turnoff.Text = "Turn Off";
+                turnoff.Text = Contents.clockOff;//_resource.GetString("clock off");
+                state = true;
             }
         }
 
         void settings_Click(object sender, EventArgs e)
         {
-            Form1 settings = new Form1();
+            SettingsForm settings = new SettingsForm();
             settings.TopMost = true;
-            settings.Show();
+            settings.ShowDialog();
             //throw new NotImplementedException();
         }
 
@@ -183,7 +244,14 @@ namespace Clock_Alert
         /// </summary>
         void loadSettings()
         {
+            //MessageBox.Show(Properties.Settings.Default.TellTime.ToString());
+            System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo(Properties.Settings.Default.SelectedLanguage);
             selectedSound = Properties.Settings.Default.CurrentSound;
+            clickToTalk = Properties.Settings.Default.ClickToTalk;
+            alertIntrvl = Properties.Settings.Default.AlertInterval;
+            start = Properties.Settings.Default.StartHour + ":" + Properties.Settings.Default.StartMin + " " + ((Properties.Settings.Default.StartTT == 0) ? "AM" : "PM");
+            end = Properties.Settings.Default.EndHour + ":" + Properties.Settings.Default.EndMin + " " + ((Properties.Settings.Default.EndTT == 0) ? "AM" : "PM");
+            tellTime = Properties.Settings.Default.TellTime;
         }
 
         /// <summary>

@@ -15,6 +15,7 @@ This file is part of Clock Alert.
 *************************************************************************************/
 using System;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Clock_Alert
 {
@@ -26,13 +27,24 @@ namespace Clock_Alert
         [STAThread]
         static void Main()
         {
+            Process currentProcess = Process.GetCurrentProcess();
+            Process[] runningProcess = Process.GetProcessesByName(currentProcess.ProcessName);
+            int numberOfProcess = runningProcess.Length;
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            using (Startup app = new Startup())
+            if (numberOfProcess == 1)
             {
-                app.startApp();
-                Application.Run();
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                using (Startup app = new Startup())
+                {
+                    app.startApp();
+                    Application.Run();
+                }
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("I'm here already!", "Clock Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -41,6 +53,7 @@ namespace Clock_Alert
             Exception ex = (Exception)e.ExceptionObject;
             CrashReporterUI reportWindow = new CrashReporterUI(ex);
             reportWindow.ShowDialog();
+            Application.Exit();
         }
         
     }

@@ -24,15 +24,16 @@ namespace Clock_Alert
 {
     partial class AboutClockAlert : Form
     {
+        private readonly ComponentResourceManager _resource;
         public AboutClockAlert()
         {
             InitializeComponent();
-            this.Text = String.Format("About {0} {0}", AssemblyTitle);
+            _resource = new ComponentResourceManager(typeof(AboutClockAlert));
             this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
+            this.labelVersion.Text += System.String.Format(" {0}", AssemblyVersion);
+            //this.labelCopyright.Text = _resource.GetString("CopyrightText");
             this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            //this.textBoxDescription.Text = _resource.GetString("DescriptionText");
         }
 
         #region Assembly Attribute Accessors
