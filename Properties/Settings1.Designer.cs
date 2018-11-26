@@ -207,5 +207,14 @@ namespace Clock_Alert.Properties {
                 return ((string)(this["ProjectHome"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://sourceforge.net/p/clockalert/discussion/general/")]
+        public string ProjectDiscussionURL {
+            get {
+                return ((string)(this["ProjectDiscussionURL"]));
+            }
+        }
     }
 }
