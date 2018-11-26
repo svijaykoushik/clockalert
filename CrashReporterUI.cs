@@ -41,10 +41,16 @@ namespace Clock_Alert
 
         private void sendButton_Click(object sender, EventArgs e)
         {
+            /* Commenting this until
+             * a new api is developed to
+             * report the crash
             Hide();
             reporter.getException(exception);
             //reporter.createReport();
             sendReport();
+            Close();
+            Application.Exit();*/
+            System.Diagnostics.Process.Start(Properties.Settings.Default.ProjectDiscussionURL);
             Close();
             Application.Exit();
         }
@@ -77,13 +83,18 @@ namespace Clock_Alert
         private void dontSendButton_Click(object sender, EventArgs e)
         {
             Close();
-            Application.Exit();
+            Application.Restart();
         }
 
         private void CrashReporterUI_Load(object sender, EventArgs e)
         {
             message = ErrorLog.logError(exception);
-            textBox1.Text = message;
+            logURLText.Text = message;
+        }
+
+        private void copyLocationButton_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(logURLText.Text);
         }
     }
 }

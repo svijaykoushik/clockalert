@@ -48,7 +48,9 @@ namespace Clock_Alert
             this.sendButton = new System.Windows.Forms.Button();
             this.dontSendButton = new System.Windows.Forms.Button();
             this.dumpLocation = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.logURLText = new System.Windows.Forms.TextBox();
+            this.copyLocationButton = new System.Windows.Forms.Button();
+            this.messageLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // displayText
@@ -81,13 +83,25 @@ namespace Clock_Alert
             resources.ApplyResources(this.dumpLocation, "dumpLocation");
             this.dumpLocation.Name = "dumpLocation";
             // 
-            // textBox1
+            // logURLText
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
+            this.logURLText.BackColor = System.Drawing.SystemColors.Control;
+            this.logURLText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            resources.ApplyResources(this.logURLText, "logURLText");
+            this.logURLText.Name = "logURLText";
+            this.logURLText.ReadOnly = true;
+            // 
+            // copyLocationButton
+            // 
+            resources.ApplyResources(this.copyLocationButton, "copyLocationButton");
+            this.copyLocationButton.Name = "copyLocationButton";
+            this.copyLocationButton.UseVisualStyleBackColor = true;
+            this.copyLocationButton.Click += new System.EventHandler(this.copyLocationButton_Click);
+            // 
+            // messageLabel
+            // 
+            resources.ApplyResources(this.messageLabel, "messageLabel");
+            this.messageLabel.Name = "messageLabel";
             // 
             // CrashReporterUI
             // 
@@ -96,7 +110,9 @@ namespace Clock_Alert
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.dontSendButton;
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.messageLabel);
+            this.Controls.Add(this.copyLocationButton);
+            this.Controls.Add(this.logURLText);
             this.Controls.Add(this.dumpLocation);
             this.Controls.Add(this.dontSendButton);
             this.Controls.Add(this.sendButton);
@@ -107,6 +123,7 @@ namespace Clock_Alert
             this.MinimizeBox = false;
             this.Name = "CrashReporterUI";
             this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Load += new System.EventHandler(this.CrashReporterUI_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -119,6 +136,8 @@ namespace Clock_Alert
         private System.Windows.Forms.Button sendButton;
         private System.Windows.Forms.Button dontSendButton;
         private System.Windows.Forms.Label dumpLocation;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox logURLText;
+        private System.Windows.Forms.Button copyLocationButton;
+        private System.Windows.Forms.Label messageLabel;
     }
 }
