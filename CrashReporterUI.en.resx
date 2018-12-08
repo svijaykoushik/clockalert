@@ -124,12 +124,12 @@
     <value>Clock alert has crashed</value>
   </data>
   <data name="dontSendButton.Text" xml:space="preserve">
-    <value>Dont send</value>
+    <value>Cancel</value>
   </data>
   <data name="dumpLocation.Text" xml:space="preserve">
     <value>Dump location</value>
   </data>
   <data name="sendButton.Text" xml:space="preserve">
-    <value>Send report</value>
+    <value>Ok</value>
   </data>
 </root>

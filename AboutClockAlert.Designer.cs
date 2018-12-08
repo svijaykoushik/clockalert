@@ -78,25 +78,21 @@ namespace Clock_Alert
             // labelProductName
             // 
             resources.ApplyResources(this.labelProductName, "labelProductName");
-            this.labelProductName.MaximumSize = new System.Drawing.Size(0, 26);
             this.labelProductName.Name = "labelProductName";
             // 
             // labelVersion
             // 
             resources.ApplyResources(this.labelVersion, "labelVersion");
-            this.labelVersion.MaximumSize = new System.Drawing.Size(0, 26);
             this.labelVersion.Name = "labelVersion";
             // 
             // labelCopyright
             // 
             resources.ApplyResources(this.labelCopyright, "labelCopyright");
-            this.labelCopyright.MaximumSize = new System.Drawing.Size(0, 26);
             this.labelCopyright.Name = "labelCopyright";
             // 
             // labelCompanyName
             // 
             resources.ApplyResources(this.labelCompanyName, "labelCompanyName");
-            this.labelCompanyName.MaximumSize = new System.Drawing.Size(0, 26);
             this.labelCompanyName.Name = "labelCompanyName";
             // 
             // textBoxDescription
