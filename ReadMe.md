@@ -11,12 +11,17 @@ Clock alert is a simple application that sits on the windows system tray and mon
 
 [![Download Clock Alert](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/clockalert/files/latest/download)
 
-1. Download setup file using the button above
-2. Extract the zip file to a location you can remember.
-3. Now, go to the location where you extracted the setup.
-4. Double click on the **setup.exe** file to start the installer
-5. Follow the instructions on screen displayed by the installer to install the app.
-6. Click finish to complete the installation.
+
+    1. Download Clock Alert 1_2_1 setup.zip file (latest version)
+    2. Extract the zip file to a well known location on your computer. E.g. Desktop
+    3. Go to the location where you extracted the files.
+    4. Open the Clock Alert 1.2.1 setup.msi file to open Clock Alert installation wizard.
+    5. Follow the installer instructions on screen to install clock alert.
+
+		For more detailed instructions, checkout the Instrctions.txt file that is bundled along with the setup in the zip file
+
+    6. Click Finish to complete the installation and close the installation wizard.
+
 
 Congratulations! 🎉 you've successfully installed **Clock Alert** in your PC.
 
@@ -32,4 +37,4 @@ You've successfully uninstalled Clock Alert.
 
 ## Contributing to clock alert
 
-If you are interested in contributing to Clock Alert, then checkout the [CONTRIBUTING](CONTRIBUTING.md) file for more information.
+If you are interested in contributing to Clock Alert, then checkout the [CONTRIBUTING](https://sites.google.com/site/clockalertapp/contributing) file for more information.
