@@ -1,25 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ClockAlert.Modules;
+using System;
 using System.Windows.Forms;
-using ClockAlert.Modules;
 
 namespace ClockAlert
 {
     public partial class SettingsForm : Form
     {
-        //private bool isPlaying;
-        private int selectedSound;
+        private bool isPlaying;
+        private AudioPlayer player;
 
+        private bool PlayerStatus { 
+            get { 
+                return isPlaying;
+            }
+            set
+            {
+                isPlaying = value;
+                if (value)
+                {
+                    button1.Image = Properties.Resources.stop;
+                }
+                else
+                {
+                    button1.Image= Properties.Resources.play;
+                    if(soundTimer != null)
+                    {
+                        soundTimer.Stop();
+                    }
+                }
+            } 
+        }
         public SettingsForm()
         {
             InitializeComponent();
-            //isPlaying = false;
+            PlayerStatus = false;
         }
 
         /// <summary>
@@ -35,7 +49,6 @@ namespace ClockAlert
             endMin.Value = Properties.Settings.Default.EndMin;
             endTT.SelectedIndex = Properties.Settings.Default.EndTT;
             checkBox1.Checked = Properties.Settings.Default.ClickToTalk;
-            selectedSound = Properties.Settings.Default.CurrentSound;
             int currentSound = Properties.Settings.Default.CurrentSound;
             if (currentSound == 1)
             {
@@ -91,31 +104,31 @@ namespace ClockAlert
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AudioPlayer player;
-            button1.Enabled = false;
-            this.Cursor = Cursors.WaitCursor;
-            if (radioButton1.Checked)
+            if (PlayerStatus == false)
             {
-                player = new AudioPlayer(Properties.Resources.sound);
-                player.Play();
+                if (radioButton1.Checked)
+                {
+                    PlaySelectedSound(Properties.Resources.sound);
+                }
+                else if (radioButton2.Checked)
+                {
+                    PlaySelectedSound(Properties.Resources.sound2);
+                }
+                else if (radioButton3.Checked)
+                {
+                    PlaySelectedSound(Properties.Resources.sound3);
+                }
+                else if (radioButton4.Checked)
+                {
+                    PlaySelectedSound(Properties.Resources.sound4);
+                }
             }
-            else if (radioButton2.Checked)
+            else
             {
-                player = new AudioPlayer(Properties.Resources.sound2);
-                player.Play();
+                PlayerStatus = false;
+                player.Stop();
             }
-            else if (radioButton3.Checked)
-            {
-                player = new AudioPlayer(Properties.Resources.sound3);
-                player.Play();
-            }
-            else if (radioButton4.Checked)
-            {
-                player = new AudioPlayer(Properties.Resources.sound4);
-                player.Play();
-            }
-            button1.Enabled = true;
-            this.Cursor = Cursors.Default;
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -190,6 +203,21 @@ namespace ClockAlert
                 disableAlertTone();
             else
                 enableAlertTone();
+        }
+
+        private void soundTimer_Tick(object sender, EventArgs e)
+        {
+            PlayerStatus = false;
+            soundTimer.Stop();
+        }
+
+        private void PlaySelectedSound(System.IO.UnmanagedMemoryStream sound)
+        {
+            player = new AudioPlayer(sound);
+            soundTimer.Interval = player.GetDuration() * 1000;
+            PlayerStatus = true;
+            player.PlayAsync();
+            soundTimer.Start();
         }
     }
 }

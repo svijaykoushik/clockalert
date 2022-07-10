@@ -163,6 +163,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="alarm_clock.ico" />
+    <None Include="Resources\128_gtk_media_stop_icon.png" />
+    <None Include="Resources\28456_gtk_media_stop_icon.png" />
     <None Include="Resources\gallery_loader.gif" />
     <None Include="Resources\gtk_media_play_ltr.png" />
     <None Include="Resources\gtk_media_pause.png" />

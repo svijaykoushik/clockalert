@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.label1 = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -49,6 +50,7 @@
             this.endTT = new System.Windows.Forms.ComboBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.soundTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.startHour)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.startMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.endMin)).BeginInit();
@@ -90,8 +92,8 @@
             // 
             // button1
             // 
-            resources.ApplyResources(this.button1, "button1");
             this.button1.Image = global::ClockAlert.Properties.Resources.play;
+            resources.ApplyResources(this.button1, "button1");
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -110,8 +112,8 @@
             // 
             // button2
             // 
-            resources.ApplyResources(this.button2, "button2");
             this.button2.DialogResult = System.Windows.Forms.DialogResult.OK;
+            resources.ApplyResources(this.button2, "button2");
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -188,12 +190,12 @@
             // 
             // startTT
             // 
-            resources.ApplyResources(this.startTT, "startTT");
             this.startTT.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.startTT.FormattingEnabled = true;
             this.startTT.Items.AddRange(new object[] {
             resources.GetString("startTT.Items"),
             resources.GetString("startTT.Items1")});
+            resources.ApplyResources(this.startTT, "startTT");
             this.startTT.Name = "startTT";
             // 
             // label5
@@ -203,12 +205,12 @@
             // 
             // endTT
             // 
-            resources.ApplyResources(this.endTT, "endTT");
             this.endTT.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.endTT.FormattingEnabled = true;
             this.endTT.Items.AddRange(new object[] {
             resources.GetString("endTT.Items"),
             resources.GetString("endTT.Items1")});
+            resources.ApplyResources(this.endTT, "endTT");
             this.endTT.Name = "endTT";
             // 
             // checkBox3
@@ -224,6 +226,11 @@
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.UseVisualStyleBackColor = true;
             this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            // 
+            // soundTimer
+            // 
+            this.soundTimer.Interval = 1000;
+            this.soundTimer.Tick += new System.EventHandler(this.soundTimer_Tick);
             // 
             // SettingsForm
             // 
@@ -285,6 +292,7 @@
         /*private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;*/
         private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.Timer soundTimer;
     }
 }
 
