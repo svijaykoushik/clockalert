@@ -120,6 +120,12 @@
   <data name="aboutText" xml:space="preserve">
     <value>About Clock Alert</value>
   </data>
+  <data name="appIsRunningBaloonText" xml:space="preserve">
+    <value>Clock Alert is already running!</value>
+  </data>
+  <data name="appIsRunningBaloonTitle" xml:space="preserve">
+    <value>Clock Alert</value>
+  </data>
   <data name="chkUpdateText" xml:space="preserve">
     <value>Update Clock Alert</value>
   </data>

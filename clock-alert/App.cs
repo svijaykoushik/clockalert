@@ -189,8 +189,8 @@ namespace ClockAlert
 
         public void ShowAlreadyRunningNotification()
         {
-            ico.BalloonTipText = "Clock Alert is already running!";
-            ico.BalloonTipTitle = "Clock Alert";
+            ico.BalloonTipText = resource.GetString("appIsRunningBaloonText");
+            ico.BalloonTipTitle = resource.GetString("appIsRunningBaloonTitle");
             ico.ShowBalloonTip(4000);
         }
 
