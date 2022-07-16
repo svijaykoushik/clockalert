@@ -140,8 +140,6 @@ namespace ClockAlert
                 return;
             }
             saveSettings();
-            Application.Restart();
-            //Application.Exit();
             this.Close();
         }
 

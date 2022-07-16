@@ -193,5 +193,10 @@ namespace ClockAlert
             ico.BalloonTipTitle = "Clock Alert";
             ico.ShowBalloonTip(4000);
         }
+
+        private void OnBeforeSettingsSaved(object sender, CancelEventArgs e)
+        {
+            LoadSettings();
+        }
     }
 }

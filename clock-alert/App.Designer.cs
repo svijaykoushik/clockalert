@@ -72,6 +72,9 @@ namespace ClockAlert
             close.AutoSize = true;
             close.Click += new EventHandler(Close_Click);
             menu.Items.Add(close);
+
+            // settings changed event handler
+            Properties.Settings.Default.SettingsSaving += OnBeforeSettingsSaved;
         }
 
         private System.ComponentModel.IContainer components = null;
