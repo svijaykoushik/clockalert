@@ -186,5 +186,12 @@ namespace ClockAlert
 
             Application.Exit();
         }
+
+        public void ShowAlreadyRunningNotification()
+        {
+            ico.BalloonTipText = "Clock Alert is already running!";
+            ico.BalloonTipTitle = "Clock Alert";
+            ico.ShowBalloonTip(4000);
+        }
     }
 }

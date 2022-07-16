@@ -29,6 +29,11 @@ namespace ClockAlert
              * firstInstance variable is set to true.
              */
             mutExcl = new Mutex(true, Application.ProductName.ToString(), out firstInstance);
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            App app = new App();
+
             /*
              * If the Mutual exclusion object was succesfully created
              * then we start the application
@@ -39,13 +44,11 @@ namespace ClockAlert
              */
             if (firstInstance)
             {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new App());
+                Application.Run(app);
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show("Clock Alert is already running!", "Clock Alert", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                app.ShowAlreadyRunningNotification();
             }
         }
     }
