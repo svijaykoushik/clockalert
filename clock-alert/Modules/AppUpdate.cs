@@ -28,10 +28,9 @@ namespace ClockAlert.Modules
         /// </summary>
         private void getVersion()
         {
-            xmlUrl = "https://clockalert.sourceforge.io/version.xml";// throw new Exception("Test error no need to panic");
+            xmlUrl = "https://clockalert.sourceforge.io/version.xml";
             try
             {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
                 reader = new XmlTextReader(xmlUrl);
                 reader.MoveToContent();
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "clockalert")
@@ -167,8 +166,8 @@ namespace ClockAlert.Modules
         {
             /* Disabling the inbuilt update check
              * new updates will be checked mannually by visiting website
-               
-            updateCheckerThread = new Thread(this.updateChecker);
+             */   
+            /*updateCheckerThread = new Thread(this.updateChecker);
             updateCheckerThread.Name = "Clock alert update checker";
             updateCheckerThread.Start();*/
 
