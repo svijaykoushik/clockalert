@@ -80,6 +80,8 @@
     <Compile Include="CrashReporterUI.Designer.cs">
       <DependentUpon>CrashReporterUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\InternetConnectionException.cs" />
+    <Compile Include="Helpers\VersionXml.cs" />
     <Compile Include="Modules\AppUpdate.cs" />
     <Compile Include="Modules\CrashReporter.cs" />
     <Compile Include="Modules\Email.cs" />
