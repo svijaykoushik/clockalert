@@ -216,5 +216,14 @@ namespace ClockAlert.Properties {
                 return ((string)(this["ProjectDiscussionURL"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://clockalert.sourceforge.io/")]
+        public string ProjectUrl {
+            get {
+                return ((string)(this["ProjectUrl"]));
+            }
+        }
     }
 }

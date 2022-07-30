@@ -1,6 +1,8 @@
-﻿using ClockAlert.Modules;
+﻿using ClockAlert.Exceptions;
+using ClockAlert.Modules;
 using System;
 using System.ComponentModel;
+using System.Net;
 using System.Windows.Forms;
 
 namespace ClockAlert
@@ -40,10 +42,59 @@ namespace ClockAlert
             aboutWindow.Show();
         }
 
-        void ChkUpdate_Click(object sender, EventArgs e)
+        async void ChkUpdate_Click(object sender, EventArgs e)
         {
-            AppUpdate updater = new AppUpdate();
-            updater.checkForUpdate();
+            try{
+                AppUpdate updater = new AppUpdate();
+                bool hasUpdate = await updater.HasUpdateAsync();
+                if (hasUpdate)
+                {
+                    if (DialogResult.Yes == MessageBox.Show(resource.GetString("updateAvailable"), resource.GetString("updateAvailableTitle"), MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    {
+                        Uri uri = await updater.GetDownloadUrlAsync();
+                        System.Diagnostics.Process.Start(uri.ToString());
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(resource.GetString("updateNotAvailable"), resource.GetString("updateNotAvailableTitle"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }catch(InternetConnectionException ice)
+            {
+                MessageBox.Show
+                    (
+                        ice.Message,
+                        ice.Message,
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Error
+                    );
+                ErrorLog.logError(ice);
+            }
+            catch(WebException we)
+            {
+                if (we.Response == null)
+                    MessageBox.Show("Update operation has been terminated abruptly because Clock Alert could not communicate with the server", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
+                {
+                    if (we.Status == WebExceptionStatus.ProtocolError)
+                    {
+                        string projectUrl =
+                            Properties.Settings.Default.ProjectUrl;
+                        if (((HttpWebResponse)we.Response).StatusCode == HttpStatusCode.NotFound)
+                            MessageBox.Show("Update operation has been terminated abruptly because Clock Alert could not find the requested resource\n Please check for updates from " + projectUrl, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        else
+                            MessageBox.Show("Update operation has been terminated abruptly because an error occured while trying to communicate with the server", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                        MessageBox.Show("Update operation has been terminated abruptly because an unknown error occured while trying to communicate with the server\nStatus:" + ((HttpWebResponse)we.Response).StatusCode + "\n Description" + ((HttpWebResponse)we.Response).StatusDescription, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                ErrorLog.logError(we);
+            }
+            catch (Exception ex)
+            {
+                CrashReporterUI reportWindow = new CrashReporterUI(ex);
+                reportWindow.ShowDialog();
+            }
         }
 
         void Ico_MouseClick(object sender, MouseEventArgs e)
