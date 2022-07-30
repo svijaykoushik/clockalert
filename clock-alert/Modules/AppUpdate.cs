@@ -40,6 +40,7 @@ namespace ClockAlert.Modules
 
             Uri uri = new Uri(url);
             WebClient webClient = new WebClient();
+            Logger.LogAsync(LogLevel.Info, $"GET {uri.OriginalString}");
             string xml = await webClient.DownloadStringTaskAsync(uri);
             MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
             return stream;

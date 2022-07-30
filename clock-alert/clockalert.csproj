@@ -87,6 +87,7 @@
     <Compile Include="Modules\Email.cs" />
     <Compile Include="Modules\ICrashReporter.cs" />
     <Compile Include="Modules\InternetConnection.cs" />
+    <Compile Include="Modules\Logger.cs" />
     <Compile Include="Progress.cs">
       <SubType>Form</SubType>
     </Compile>

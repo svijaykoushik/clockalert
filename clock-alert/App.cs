@@ -34,6 +34,13 @@ namespace ClockAlert
             this.InitializeComponents();
             clock.Start();
             state = true;
+            Guid appId = Properties.Settings.Default.AppId;
+            if(appId == Guid.Empty)
+            {
+                Properties.Settings.Default.AppId= Guid.NewGuid();
+                Properties.Settings.Default.Save();
+                Logger.LogAsync(LogLevel.Info, "Initialized first run");
+            }
         }
 
         void About_Click(object sender, EventArgs e)
@@ -52,6 +59,7 @@ namespace ClockAlert
                     if (DialogResult.Yes == MessageBox.Show(resource.GetString("updateAvailable"), resource.GetString("updateAvailableTitle"), MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                     {
                         Uri uri = await updater.GetDownloadUrlAsync();
+                        Logger.LogAsync(LogLevel.Info, "Start browser to download");
                         System.Diagnostics.Process.Start(uri.ToString());
                     }
                 }
@@ -68,6 +76,7 @@ namespace ClockAlert
                         MessageBoxButtons.OK, 
                         MessageBoxIcon.Error
                     );
+                Logger.LogAsync(LogLevel.Error, ice.Message);
                 ErrorLog.logError(ice);
             }
             catch(WebException we)
@@ -88,12 +97,14 @@ namespace ClockAlert
                     else
                         MessageBox.Show("Update operation has been terminated abruptly because an unknown error occured while trying to communicate with the server\nStatus:" + ((HttpWebResponse)we.Response).StatusCode + "\n Description" + ((HttpWebResponse)we.Response).StatusDescription, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                Logger.LogAsync(LogLevel.Error, we.Message);
                 ErrorLog.logError(we);
             }
             catch (Exception ex)
             {
+                Logger.LogAsync(LogLevel.Fatal, ex.Message);
                 CrashReporterUI reportWindow = new CrashReporterUI(ex);
-                reportWindow.ShowDialog();
+                            reportWindow.ShowDialog();
             }
         }
 
@@ -120,28 +131,21 @@ namespace ClockAlert
             {
                 if (keeper.IsBetween(DateTime.Now, Convert.ToDateTime(start), Convert.ToDateTime(end)))
                 {
-                    if (keeper.IsItTime())
-                    {
-                        try
-                        {
-                            clock.Stop();
-                            if (tellTime == false)
-                                player.PlayAsync();
-                            else
-                                teller.Talk("The time is " + DateTime.Now.ToString("hh:mm tt"));
-                            clock.Start();
-                        }
-                        catch (Exception ex)
-                        {
-                            clock.Stop();
-                           /* MessageBox.Show(ErrorLog.logError(ex), "Error - Clock Alert", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);*/
-                            CrashReporterUI reportWindow = new CrashReporterUI(ex);
-                            reportWindow.ShowDialog();
-                        }
-                    }
+                    Logger.LogAsync(LogLevel.Info, "Alert on chosen period");
+                    DispatchAlert();
+                }
+                else
+                {
+                    DispatchAlert();
                 }
             }
             else
+            {
+                DispatchAlert();
+            }
+        }
+
+            void DispatchAlert()
             {
                 if (keeper.IsItTime())
                 {
@@ -149,33 +153,41 @@ namespace ClockAlert
                     {
                         clock.Stop();
                         if (tellTime == false)
+                        {
+                            Logger.LogAsync(LogLevel.Info, "Dispatch alert with sound");
                             player.PlayAsync();
+                        }
                         else
+                        {
+                            Logger.LogAsync(LogLevel.Info, "Dispatch alert with voice");
                             teller.Talk("The time is " + DateTime.Now.ToString("hh:mm tt"));
+                        }
                         clock.Start();
                     }
                     catch (Exception ex)
                     {
                         clock.Stop();
+                        Logger.LogAsync(LogLevel.Fatal, ex.Message);
                         /*MessageBox.Show(ErrorLog.logError(ex), "Error - Clock Alert", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);*/
                         CrashReporterUI reportWindow = new CrashReporterUI(ex);
                         reportWindow.ShowDialog();
                     }
                 }
             }
-        }
 
         void Turnoff_Click(object sender, EventArgs e)
         {
             if (state == true)
             {
                 clock.Stop();
+                Logger.LogAsync(LogLevel.Info, "Clock stopped");
                 turnoff.Text = resource.GetString("clockOn");
                 state = false;
             }
             else
             {
                 clock.Start();
+                Logger.LogAsync(LogLevel.Info, "Clock started");
                 turnoff.Text = resource.GetString("clockOff");
                 state = true;
             }
@@ -243,7 +255,9 @@ namespace ClockAlert
 
         private void OnBeforeSettingsSaved(object sender, CancelEventArgs e)
         {
+            Logger.LogAsync(LogLevel.Info, "Settings change detected");
             LoadSettings();
+            Logger.LogAsync(LogLevel.Info, "Settings change applied");
         }
     }
 }

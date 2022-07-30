@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClockAlert.Modules;
+using System;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -44,7 +45,9 @@ namespace ClockAlert
              */
             if (firstInstance)
             {
+                Logger.LogAsync(LogLevel.Info, "Application started");
                 Application.Run(app);
+                Logger.LogAsync(LogLevel.Info, "Application exited");
             }
             else
             {
