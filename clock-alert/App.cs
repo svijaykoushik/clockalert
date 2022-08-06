@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace ClockAlert
 {
-    public partial class App:ApplicationContext
+    public partial class App : ApplicationContext
     {
 
         private readonly ComponentResourceManager resource;
@@ -35,9 +35,9 @@ namespace ClockAlert
             clock.Start();
             state = true;
             Guid appId = Properties.Settings.Default.AppId;
-            if(appId == Guid.Empty)
+            if (appId == Guid.Empty)
             {
-                Properties.Settings.Default.AppId= Guid.NewGuid();
+                Properties.Settings.Default.AppId = Guid.NewGuid();
                 Properties.Settings.Default.Save();
                 Logger.LogAsync(LogLevel.Info, "Initialized first run");
             }
@@ -51,7 +51,8 @@ namespace ClockAlert
 
         async void ChkUpdate_Click(object sender, EventArgs e)
         {
-            try{
+            try
+            {
                 AppUpdate updater = new AppUpdate();
                 bool hasUpdate = await updater.HasUpdateAsync();
                 if (hasUpdate)
@@ -67,19 +68,20 @@ namespace ClockAlert
                 {
                     MessageBox.Show(resource.GetString("updateNotAvailable"), resource.GetString("updateNotAvailableTitle"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }catch(InternetConnectionException ice)
+            }
+            catch (InternetConnectionException ice)
             {
                 MessageBox.Show
                     (
                         ice.Message,
                         ice.Message,
-                        MessageBoxButtons.OK, 
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Error
                     );
                 Logger.LogAsync(LogLevel.Error, ice.Message);
                 ErrorLog.logError(ice);
             }
-            catch(WebException we)
+            catch (WebException we)
             {
                 if (we.Response == null)
                     MessageBox.Show("Update operation has been terminated abruptly because Clock Alert could not communicate with the server", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -104,7 +106,7 @@ namespace ClockAlert
             {
                 Logger.LogAsync(LogLevel.Fatal, ex.Message);
                 CrashReporterUI reportWindow = new CrashReporterUI(ex);
-                            reportWindow.ShowDialog();
+                reportWindow.ShowDialog();
             }
         }
 
@@ -145,35 +147,35 @@ namespace ClockAlert
             }
         }
 
-            void DispatchAlert()
+        void DispatchAlert()
+        {
+            if (keeper.IsItTime())
             {
-                if (keeper.IsItTime())
+                try
                 {
-                    try
+                    clock.Stop();
+                    if (tellTime == false)
                     {
-                        clock.Stop();
-                        if (tellTime == false)
-                        {
-                            Logger.LogAsync(LogLevel.Info, "Dispatch alert with sound");
-                            player.PlayAsync();
-                        }
-                        else
-                        {
-                            Logger.LogAsync(LogLevel.Info, "Dispatch alert with voice");
-                            teller.Talk("The time is " + DateTime.Now.ToString("hh:mm tt"));
-                        }
-                        clock.Start();
+                        Logger.LogAsync(LogLevel.Info, "Dispatch alert with sound");
+                        player.PlayAsync();
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        clock.Stop();
-                        Logger.LogAsync(LogLevel.Fatal, ex.Message);
-                        /*MessageBox.Show(ErrorLog.logError(ex), "Error - Clock Alert", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);*/
-                        CrashReporterUI reportWindow = new CrashReporterUI(ex);
-                        reportWindow.ShowDialog();
+                        Logger.LogAsync(LogLevel.Info, "Dispatch alert with voice");
+                        teller.Talk("The time is " + DateTime.Now.ToString("hh:mm tt"));
                     }
+                    clock.Start();
+                }
+                catch (Exception ex)
+                {
+                    clock.Stop();
+                    Logger.LogAsync(LogLevel.Fatal, ex.Message);
+                    /*MessageBox.Show(ErrorLog.logError(ex), "Error - Clock Alert", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);*/
+                    CrashReporterUI reportWindow = new CrashReporterUI(ex);
+                    reportWindow.ShowDialog();
                 }
             }
+        }
 
         void Turnoff_Click(object sender, EventArgs e)
         {

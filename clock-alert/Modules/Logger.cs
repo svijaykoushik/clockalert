@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace ClockAlert.Modules
 {
-    internal enum LogLevel 
+    internal enum LogLevel
     {
         Info,
         Warn,
@@ -26,7 +26,7 @@ namespace ClockAlert.Modules
             string appName = Application.ProductName.ToLower();
             appName = Regex.Replace(appName, @"[\s,]", "-");
             string ext = ".log";
-            path = appData + sep + vendor + sep + appName+sep+ appName + ext;
+            path = appData + sep + vendor + sep + appName + sep + appName + ext;
             string dirPath = Path.GetDirectoryName(path);
             if (!Directory.Exists(dirPath))
             {
@@ -40,7 +40,7 @@ namespace ClockAlert.Modules
 
         private static long GetSizeInMegaBytes()
         {
-            if(File.Exists(path) == false)
+            if (File.Exists(path) == false)
             {
                 return 0;
             }
@@ -71,7 +71,7 @@ namespace ClockAlert.Modules
             File.Move(path, rollOverPath);
         }
 
-        public static async void LogAsync(LogLevel logLevel,string message)
+        public static async void LogAsync(LogLevel logLevel, string message)
         {
             bool hasRolledOver = false;
             if (ShouldRollOver())

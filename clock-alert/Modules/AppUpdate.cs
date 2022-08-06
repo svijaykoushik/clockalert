@@ -13,20 +13,11 @@ namespace ClockAlert.Modules
 {
     internal class AppUpdate
     {
-        private Version newVersion, currentVersion;
-        private XmlTextReader reader;
-        private string url, elementName, xmlUrl;
-        private Thread updateCheckerThread, autoUpdateCheckerTherad;
+        private string url;
 
         public AppUpdate()
         {
-            newVersion = null;
-            currentVersion = null;
-            reader = null;
             url = "https://clockalert.sourceforge.io/version.xml";
-            elementName = string.Empty;
-            xmlUrl = string.Empty;
-            updateCheckerThread = null;
         }
 
         /// <summary>
@@ -62,7 +53,7 @@ namespace ClockAlert.Modules
         private async Task<VersionXml> GetVersionAsync(string url)
         {
             MemoryStream stream = await GetVersionXmlStream(url);
-            VersionXml version= DeSerializeVersionXml(stream);
+            VersionXml version = DeSerializeVersionXml(stream);
             return version;
         }
 
@@ -74,13 +65,13 @@ namespace ClockAlert.Modules
         /// <exception cref="WebException">Something went wrong when downloading the xml.</exception>
         public async Task<bool> HasUpdateAsync()
         {
-            if(InternetConnection.checkConntection() == false)
+            if (InternetConnection.checkConntection() == false)
             {
                 throw new InternetConnectionException();
             }
-            VersionXml versionXml= await GetVersionAsync(url);
+            VersionXml versionXml = await GetVersionAsync(url);
             Version currentVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            return currentVersion.CompareTo(versionXml.Version)<0;
+            return currentVersion.CompareTo(versionXml.Version) < 0;
         }
 
         /// <summary>

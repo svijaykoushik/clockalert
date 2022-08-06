@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClockAlert.Exceptions
 {
-    public class InternetConnectionException: Exception
+    public class InternetConnectionException : Exception
     {
-        public InternetConnectionException():base("No Internet")
+        public InternetConnectionException() : base("No Internet")
         {
         }
     }

@@ -9,8 +9,10 @@ namespace ClockAlert
         private bool isPlaying;
         private AudioPlayer player;
 
-        private bool PlayerStatus { 
-            get { 
+        private bool PlayerStatus
+        {
+            get
+            {
                 return isPlaying;
             }
             set
@@ -22,13 +24,13 @@ namespace ClockAlert
                 }
                 else
                 {
-                    button1.Image= Properties.Resources.play;
-                    if(soundTimer != null)
+                    button1.Image = Properties.Resources.play;
+                    if (soundTimer != null)
                     {
                         soundTimer.Stop();
                     }
                 }
-            } 
+            }
         }
         public SettingsForm()
         {
@@ -78,11 +80,11 @@ namespace ClockAlert
         {
             Properties.Settings.Default.ClickToTalk = checkBox1.Checked;
             Properties.Settings.Default.AlertInterval = checkBox3.Checked;
-            Properties.Settings.Default.StartHour = (int) startHour.Value;
-            Properties.Settings.Default.StartMin = (int) startMin.Value;
+            Properties.Settings.Default.StartHour = (int)startHour.Value;
+            Properties.Settings.Default.StartMin = (int)startMin.Value;
             Properties.Settings.Default.StartTT = startTT.SelectedIndex;
-            Properties.Settings.Default.EndHour = (int) endHour.Value;
-            Properties.Settings.Default.EndMin = (int) endMin.Value;
+            Properties.Settings.Default.EndHour = (int)endHour.Value;
+            Properties.Settings.Default.EndMin = (int)endMin.Value;
             Properties.Settings.Default.EndTT = endTT.SelectedIndex;
             Properties.Settings.Default.TellTime = checkBox4.Checked;
             if (radioButton1.Checked)
@@ -128,7 +130,7 @@ namespace ClockAlert
                 PlayerStatus = false;
                 player.Stop();
             }
-            
+
         }
 
         private void button2_Click(object sender, EventArgs e)
