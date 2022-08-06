@@ -54,5 +54,14 @@ namespace ClockAlert
                 app.ShowAlreadyRunningNotification();
             }
         }
+
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception ex = (Exception)e.ExceptionObject;
+            CrashReporterUI reportWindow = new CrashReporterUI(ex);
+            reportWindow.ShowDialog();
+            Logger.LogAsync(LogLevel.Fatal, e.ToString());
+            Application.Exit();
+        }
     }
 }
