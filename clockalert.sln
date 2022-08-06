@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clockalert", "clock-alert\clockalert.csproj", "{1C3F1CB9-B005-4347-A73F-74CC6C1B7437}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clockalerttest", "clockalerttest\clockalerttest.csproj", "{97BD9C04-E532-43C5-B653-2F96239D86FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{1C3F1CB9-B005-4347-A73F-74CC6C1B7437}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C3F1CB9-B005-4347-A73F-74CC6C1B7437}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C3F1CB9-B005-4347-A73F-74CC6C1B7437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97BD9C04-E532-43C5-B653-2F96239D86FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97BD9C04-E532-43C5-B653-2F96239D86FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97BD9C04-E532-43C5-B653-2F96239D86FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97BD9C04-E532-43C5-B653-2F96239D86FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
