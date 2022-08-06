@@ -11,9 +11,9 @@ namespace ClockAlert.Modules
         /// Checks wether it is time to ring the sound
         /// </summary>
         /// <returns>True if an hour is complete</returns>
-        public bool IsItTime()
+        public bool IsItTime(DateTime now)
         {
-            if (DateTime.Now.Minute.ToString() == "0" && DateTime.Now.Second.ToString() == "0")
+            if (now.Minute.ToString() == "0" && now.Second.ToString() == "0")
                 return true;
             else
                 return false;

@@ -149,7 +149,7 @@ namespace ClockAlert
 
         void DispatchAlert()
         {
-            if (keeper.IsItTime())
+            if (keeper.IsItTime(DateTime.Now))
             {
                 try
                 {
