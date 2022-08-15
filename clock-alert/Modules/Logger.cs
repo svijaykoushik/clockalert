@@ -71,6 +71,12 @@ namespace ClockAlert.Modules
             File.Move(path, rollOverPath);
         }
 
+        private static string CreateLogItem(LogLevel logLevel,  string appId,string user, DateTime timestamp,string message)
+        {
+            string logItem = $"{logLevel} {appId} {user} [{timestamp:yyyy-MM-dd HH:mm:ss zzz}] \"{message}\"";
+            return logItem;
+        }
+
         public static async void LogAsync(LogLevel logLevel, string message)
         {
             bool hasRolledOver = false;
@@ -87,10 +93,12 @@ namespace ClockAlert.Modules
             {
                 string appName = Application.ProductName.ToLower();
                 appName = Regex.Replace(appName, @"[\s,]", "-");
-                string rollOverMessage = $"{LogLevel.Warn} {appId} {appName} [{DateTime.Now:yyyy-MM-dd HH:mm:ss zzz}] \"Rolled over\"";
+                string rollOverMessage = CreateLogItem(logLevel, appId, appName, DateTime.Now, message);
+               // string rollOverMessage = $"{LogLevel.Warn} {appId} {appName} [{DateTime.Now:yyyy-MM-dd HH:mm:ss zzz}] \"Rolled over\"";
                 await streamWriter.WriteLineAsync(rollOverMessage);
             }
-            string logItem = $"{logLevel} {appId} {user} [{DateTime.Now:yyyy-MM-dd HH:mm:ss zzz}] \"{message}\"";
+            string logItem = CreateLogItem(logLevel,appId,user,DateTime.Now,message);
+            // string logItem = $"{logLevel} {appId} {user} [{DateTime.Now:yyyy-MM-dd HH:mm:ss zzz}] \"{message}\"";
             await streamWriter.WriteLineAsync(logItem);
             streamWriter.Close();
         }
