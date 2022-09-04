@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?define ProductName="Clock Alert" ?>
+<?define ProductManufacturer="Moon01Man" ?>
+<Wix 
+	xmlns="http://schemas.microsoft.com/wix/2006/wi"
+	xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+	<Product
+		Id="*"
+		Codepage="1252"
+		Language="1033"
+		Manufacturer="$(var.ProductManufacturer)"
+		Name="$(var.ProductName)"
+		UpgradeCode="{C231DA78-65CC-41EF-B9FC-722BB9D6BEBB}"
+		Version="1.3.0.4">
+		<Package
+			Comments="This installer database contains the logic and data required to install $(var.ProductName)."
+			Compressed="yes"
+			Description="$(var.ProductName)"
+			InstallerVersion="200"
+			Languages="1033"
+			Manufacturer="$(var.ProductManufacturer)"
+			Platform="x86" />
+		<Condition
+			Message="$(var.ProductName) requires .NET Framework 4.7.2 to run. Please install the .NET Framework and run this installer again">
+			<!--<![CDATA[Installed OR (NETFRAMEWORK45 AND NETFRAMEWORK45 >= "#460805")]]>-->
+			<![CDATA[Installed OR WIX_IS_NETFRAMEWORK_472_OR_LATER_INSTALLED]]>
+		</Condition>
+		<CustomAction
+			Id="LaunchApplication"
+			BinaryKey="WixCA"
+			DllEntry="WixShellExec"
+		/>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="DesktopFolder" Name="Desktop">
+				<Component Id="ApplicationDesktopShortcut" Guid="{92E31399-5D26-4AF1-898C-0021A1025A05}">
+					<RegistryValue Id="regB3D82F56604F11C054F95205986123A6" Root="HKCU" Key="Software\$(var.ProductManufacturer)\$(var.ProductName)" Name="installed" Value="1" Type="integer" KeyPath="yes" />
+					<RemoveFolder Id="RemoveDesktopFolder" Directory="DesktopFolder" On="uninstall" />
+					<Shortcut Id="AppDesktopShortcut" Directory="DesktopFolder" Name="$(var.ProductName)" ShortName="mwx3kwfi" Target="[#ProductComponent]" Description="A clock that rings every hour" WorkingDirectory="INSTALLFOLDER" />
+				</Component>
+			</Directory>
+			<Directory Id="StartupFolder" Name="Startup">
+				<Component Id="ApplicationStartupShortcut" Guid="{D183C3C8-740B-4712-85D5-3DBFF720E24A}">
+					<RegistryValue Id="regE0B41E28761F0726C6002B44D12E154E" Root="HKCU" Key="Software\$(var.ProductManufacturer)\$(var.ProductName)" Name="installed" Value="1" Type="integer" KeyPath="yes" />
+					<RemoveFolder Id="RemoveStartupFolder" Directory="StartupFolder" On="uninstall" />
+					<Shortcut Id="AppStartupShortcut" Directory="StartupFolder" Name="$(var.ProductName)" ShortName="ovgcelz9" Target="[#ProductComponent]" Description="A clock that rings every hour" WorkingDirectory="INSTALLFOLDER" />
+				</Component>
+			</Directory>
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="PublisherName" Name="$(var.ProductManufacturer)" ShortName="ecrlh8jy">
+					<Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" ShortName="jm15gj3v">
+						<Component Id="ProductComponent" Guid="{70E1965C-AFA0-48B9-A02F-A4342308BC9E}">
+							<File
+								Id="ProductComponent"
+								Name="$(var.ProductName).exe"
+								KeyPath="yes"
+								ShortName="hfiprrt_.exe"
+								DiskId="1"
+								Source="$(var.clockalert.TargetPath)" />
+						</Component>
+					</Directory>
+				</Directory>
+			</Directory>
+			<Directory Id="ProgramMenuFolder">
+				<Directory Id="PublisherNameShortcut" Name="$(var.ProductManufacturer)" ShortName="rqmlow3q">
+					<Directory Id="InstallFolderShortcut" Name="$(var.ProductName)" ShortName="hqbj34oa">
+						<Component Id="ApplicationShortcut" Guid="{02945C34-997E-490F-93B4-90B2C2F750E7}">
+							<RegistryValue Id="reg1BECD08F436C7B0ACA72E1A3DB31C96B" Root="HKCU" Key="Software\$(var.ProductManufacturer)\$(var.ProductName)" Name="installed" Value="1" Type="integer" KeyPath="yes" />
+							<RemoveFolder Id="InstallFolderShortcut" Directory="InstallFolderShortcut" On="uninstall" />
+							<RemoveFolder Id="RemovePublisherName" Directory="PublisherNameShortcut" On="uninstall" />
+							<Shortcut Id="ApplicationStartMenuShortcut" Directory="InstallFolderShortcut" Name="$(var.ProductName)" ShortName="as102zar" Target="[#ProductComponent]" Description="A clock that rings every hour." WorkingDirectory="INSTALLFOLDER" />
+							<Shortcut
+								Id="UninstallProduct"
+								Directory="InstallFolderShortcut"
+								Name="Uninstall $(var.ProductName)"
+								ShortName="sgj1zcv3"
+								Target="[SystemFolder]msiexec.exe"
+								Description="Uninstalls $(var.ProductName)"
+								Arguments="/x [ProductCode]" />
+						</Component>
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+		<Feature Id="ProductFeature" Level="1" Title="$(var.ProductName)">
+			<ComponentRef Id="ProductComponent" />
+			<ComponentRef Id="ApplicationShortcut" />
+			<ComponentRef Id="ApplicationDesktopShortcut" />
+			<ComponentRef Id="ApplicationStartupShortcut" />
+		</Feature>
+		<Icon Id="AppIcon" SourceFile="E:\Downloads\Clock Alert 1_2_1 setup\Icon\AppIcon" />
+		<MajorUpgrade 
+			DowngradeErrorMessage="A newer version of $(var.ProductName) is already installed."
+		    Schedule="afterInstallValidate"
+		/>
+		<Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
+		<Property Id="ALLUSERS" Value="1" />
+		<Property Id="ARPPRODUCTICON" Value="AppIcon" />
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch $(var.ProductName)" />
+		<Property Id="WixShellExecTarget" Value="[#ProductComponent]" />
+		<PropertyRef Id="WIX_IS_NETFRAMEWORK_472_OR_LATER_INSTALLED"/>
+		<!--<Property Id="WIX_IS_NETFRAMEWORK_472_OR_LATER_INSTALLED" Secure="yes" />-->
+		<Property Id="WIX_DOWNGRADE_DETECTED" Secure="yes" />
+		<Property Id="WIX_UPGRADE_DETECTED" Secure="yes" />
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+		<UIRef Id="WixUI_InstallDir" />
+	</Product>
+</Wix>
