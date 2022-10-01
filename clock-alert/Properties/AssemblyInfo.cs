@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("Clock Alert")]
 [assembly: AssemblyDescription("A clock that rings every hour. It is a free and open source application that notifies you with an alert every passing hour.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Vijaykoushik S (Formerly Moon01Man)")]
+[assembly: AssemblyCompany("Moon01Man")]
 [assembly: AssemblyProduct("Clock Alert")]
 [assembly: AssemblyCopyright("Copyright © Vijaykoushik S 2012 - 2022")]
 [assembly: AssemblyTrademark("")]
@@ -33,8 +33,8 @@ using System.Runtime.CompilerServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.2.0")]
-[assembly: AssemblyFileVersion("1.2.2.2")]
+[assembly: AssemblyVersion("1.3.0.0")]
+[assembly: AssemblyFileVersion("1.3.0.2")]
 [assembly: NeutralResourcesLanguage("")]
 
 // Allow internal classes to test project
