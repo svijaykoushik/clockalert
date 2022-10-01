@@ -26,11 +26,7 @@ namespace ClockAlert
             this.teller = new TimeTeller();
             resource = new ComponentResourceManager(typeof(App));
 
-            this.LoadSettings();
-            if (tellTime == false)
-            {
-                this.LoadSound();
-            }
+            this.InitializeConfiguration();
             this.InitializeComponents();
             clock.Start();
             state = true;
@@ -43,6 +39,14 @@ namespace ClockAlert
             }
         }
 
+        void InitializeConfiguration()
+        {
+            this.LoadSettings();
+            if (tellTime == false)
+            {
+                this.LoadSound();
+            }
+        }
         void About_Click(object sender, EventArgs e)
         {
             AboutClockAlert aboutWindow = new AboutClockAlert();
@@ -257,8 +261,8 @@ namespace ClockAlert
 
         private void OnBeforeSettingsSaved(object sender, CancelEventArgs e)
         {
-            Logger.LogAsync(LogLevel.Info, "Settings change detected");
-            LoadSettings();
+            Logger.LogAsync(LogLevel.Info, "Settings change detected"); 
+            this.InitializeConfiguration();
             Logger.LogAsync(LogLevel.Info, "Settings change applied");
         }
     }
